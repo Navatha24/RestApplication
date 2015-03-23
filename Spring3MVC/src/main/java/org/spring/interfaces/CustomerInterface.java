@@ -1,7 +1,9 @@
 package org.spring.interfaces;
 
 import java.util.List;
+
 import javax.sql.DataSource;
+
 import org.spring.model.Customer;
 
 public interface CustomerInterface {
@@ -9,18 +11,18 @@ public interface CustomerInterface {
 	public void setDataSource(DataSource ds);
 
 	// Create
-	public void Create(String customername);
+	public void Create(String customername) throws Exception;
 
 	// Read
-	public List<Customer> getAll();
+	public List<Customer> getAll() throws Exception;
 
 	// Read
-	public Customer getCustomer(int customerid);
+	public Customer getCustomer(int customerid)throws Exception;
 
 	// Update
-	public void Update(int customerid, String customername);
+	public void Update(int customerid, String customername)throws Exception;
 
 	// Delete
-	public void Delete(int customerid);
+	public int Delete(int customerid)throws Exception;
 
 }
