@@ -1,7 +1,6 @@
 package org.spring.controller;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spring.dao.CustomerDaoService;
@@ -28,14 +27,14 @@ public class JSONCustomerController {
 		context = new FileSystemXmlApplicationContext("classpath:bean.xml");
 		customerDaoService = (CustomerDaoService) context
 				.getBean("customerdao");
-		LOG.debug("Successfully intialised and loaded the bean");
+		LOG.debug("successfully intialised and loaded the bean");
 	}
 
 	@RequestMapping(value = "/registernewcustomer/{customername}", method = RequestMethod.POST)
 	public @ResponseBody
 	String registerNewCustomer(@PathVariable String customername) {
 
-		LOG.debug("Registering new customer:" + customername);
+		LOG.debug("registering new customer:" + customername);
 
 		if (isEmpty(customername)) {
 			String eMessage = "Error creating customer - no customername is given to create";
@@ -57,7 +56,7 @@ public class JSONCustomerController {
 	public @ResponseBody
 	List<Customer> getAll() {
 		
-		LOG.debug("Retreiving all new customers");
+		LOG.debug("retreiving all new customers");
 
 		List<Customer> customers = null;
 
@@ -99,7 +98,25 @@ public class JSONCustomerController {
 		}
 		
 	}
+	
+	@RequestMapping(value = "/getcustomer/{customerid}", method = RequestMethod.GET)
+	public @ResponseBody
+	Customer getCustomer(@PathVariable int customerid) {
+		
+		LOG.debug("retreiving customer with customerid:"+customerid);
 
+		Customer customer = null;
+
+		try {
+			customer = customerDaoService.getCustomer(customerid);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return customer;
+	}
+	
 	public static boolean isEmpty(String name) {
 		return (null == name) || name.trim().length() == 0;
 	}

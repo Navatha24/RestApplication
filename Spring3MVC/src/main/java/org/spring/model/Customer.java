@@ -9,7 +9,6 @@ public class Customer {
 	}
 
 	public Customer(int customer_id, String customer_name) {
-
 		this.customer_id = customer_id;
 		this.customer_name = customer_name;
 	}

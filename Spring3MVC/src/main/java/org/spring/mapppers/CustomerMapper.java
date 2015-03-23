@@ -4,7 +4,6 @@ package org.spring.mapppers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.spring.model.Customer;
 import org.springframework.jdbc.core.RowMapper;
 

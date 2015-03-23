@@ -1,9 +1,7 @@
 package org.spring.interfaces;
 
 import java.util.List;
-
 import javax.sql.DataSource;
-
 import org.spring.model.Customer;
 
 public interface CustomerInterface {
