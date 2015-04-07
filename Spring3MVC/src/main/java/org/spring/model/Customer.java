@@ -1,10 +1,17 @@
 package org.spring.model;
 
+import java.util.List;
+
+import org.codehaus.jackson.annotate.JsonProperty;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+@XStreamAlias("book")
 public class Customer {
 
 	private int customer_id;
 	private String customer_name;
-
+	
 	public Customer() {
 	}
 
@@ -32,7 +39,8 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [customer_id=" + customer_id + ", customer_name="
-				+ customer_name+"]";
+				+ customer_name + "]";
 	}
 
+	
 }

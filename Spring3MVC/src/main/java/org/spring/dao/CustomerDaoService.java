@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.sql.Types;
+
 import javax.sql.DataSource;
+
 import org.spring.interfaces.CustomerInterface;
 import org.spring.mapppers.*;
 import org.spring.model.Customer;
@@ -28,24 +30,28 @@ public class CustomerDaoService implements CustomerInterface {
 
 		jdbcTemplate.update(SQL, new Object[] { customername },
 				new int[] { Types.VARCHAR });
-		
+				
 	}
 
-	public void Update(int customerid, String customername) throws Exception {
+	public Customer Update(int customerid, String customername) throws Exception {
 		String SQL = "update customers set customer_name = ? where customer_id = ?";
-
+				
 		jdbcTemplate.update(SQL, new Object[] { customername, customerid });
 
-		return;
+		Customer updatedCustomer = getCustomer(customerid);
+
+		return updatedCustomer;
 
 	}
 
-	public int Delete(int customerid) throws Exception{
+	public Customer Delete(int customerid) throws Exception {
 		String SQL = "delete from customers where customer_id = ?";
 
-		int status = jdbcTemplate.update(SQL, new Object[] { customerid });
+		Customer deletingCustomer = getCustomer(customerid);
 
-		return status;
+		jdbcTemplate.update(SQL, new Object[] { customerid });
+
+		return deletingCustomer;
 
 	}
 
@@ -75,5 +81,13 @@ public class CustomerDaoService implements CustomerInterface {
 		return customerList;
 
 	}
+	
+	public List<?> getCustomerId(String customerName) throws Exception
+	{
+		String SQL = "select customer_id from customers where customer_name = ?";
 
+		List<?> customerIds = jdbcTemplate.queryForList(SQL, new Object[] { customerName });
+		
+		return customerIds;
+	}
 }

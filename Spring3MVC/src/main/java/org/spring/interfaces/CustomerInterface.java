@@ -18,9 +18,9 @@ public interface CustomerInterface {
 	public Customer getCustomer(int customerid)throws Exception;
 
 	// Update
-	public void Update(int customerid, String customername)throws Exception;
+	public Customer Update(int customerid, String customername)throws Exception;
 
 	// Delete
-	public int Delete(int customerid)throws Exception;
+	public Customer Delete(int customerid)throws Exception;
 
 }
