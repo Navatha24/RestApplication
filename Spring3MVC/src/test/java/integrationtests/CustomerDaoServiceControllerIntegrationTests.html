@@ -1,0 +1,86 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+<head>
+<link href="../concordion.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<h1>Specification By Example-RESTful Web Service</h1>
+	<p>
+		<b>Service
+			baseUri:http://localhost:8080/SpringMVC/rest/assurity/customers</b>
+	</p>
+
+	<div class="example">
+		<h3>1.Get customer details</h3>
+		<p>
+			<b>Uri:baseUri/getcustomer/{customerId}</b> <br></br> <b>Verb:GET</b>
+		</p>
+		<p>Using the url when I request the service with a valid customer id then I should retrieve its
+			corresponding customer name from the service</p>
+		<table c:execute="#result=testGetCustomerWithId(#customerId)">
+			<tr>
+				<th c:set="#customerId">CustomerId</th>
+				<th c:assertEquals="#result">CustomerName</th>
+			</tr>
+			<tr>
+				<td>10</td>
+				<td>Sam</td>
+			</tr>
+			<tr>
+				<td>11</td>
+				<td>Nick</td>
+			</tr>
+			<tr>
+				<td>13</td>
+				<td>Mary</td>
+			</tr>
+			<tr>
+				<td>14</td>
+				<td>Peter</td>
+			</tr>
+			<tr>
+				<td>15</td>
+				<td>Jasmine</td>
+			</tr>
+			<tr>
+				<td>16</td>
+				<td>Joy</td>
+			</tr>
+		</table>
+	</div>
+	<div class="example">
+		<h3>2.Valid status codes for invalid uri</h3>
+		<p>
+			<b>Verb:GET</b>
+		</p>
+		<p>When I request the service with invalid url then I should receive a
+			valid error message that the resource is not found</p>
+		<table c:execute="#result=testStatusCodes(#uri)">
+			<tr>
+				<th c:set="#uri">Invalid URI</th>
+				<th c:assertEquals="#result">Status Code</th>
+			</tr>
+			<tr>
+				<td>/notfound</td>
+				<td>404</td>
+			</tr>
+		</table>
+	</div>
+	<div class="example">
+		<h3>3.Validate few customers</h3>
+		<p>
+			<b>Uri:baseUri/getallcustomers</b> <br></br> <b>Verb:GET</b>
+		</p>
+		<p>Using the url when I request the service to get all the customers then I should be
+			able to find all the customers in the table</p>
+		<table c:verifyRows="#result:testGetAllCustomers()">
+			<tr><th c:assertEquals="#result">CustomerName</th></tr>
+			<tr><td>Sam</td></tr>
+			<tr><td>Nick</td></tr>
+			<tr><td>Mary</td></tr>
+			<tr><td>Peter</td></tr>
+			<tr><td>Jasmine</td></tr>
+			<tr><td>Joy</td></tr>
+		</table>
+	</div>
+</body>
+</html>
