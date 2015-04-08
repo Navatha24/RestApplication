@@ -19,12 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/assurity/customers")
 public class CustomerDaoServiceController {
 
-	private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoServiceController.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(CustomerDaoServiceController.class);
 	private ApplicationContext context;
 	private CustomerDaoService customerDaoService;
 	private Customer customer;
 	private List<Customer> customers;
-		
+
 	public CustomerDaoServiceController() {
 		LOG.info("intialising and loading the bean " + customerDaoService);
 
@@ -82,15 +83,15 @@ public class CustomerDaoServiceController {
 		return "successfully deleted the customer " + customer;
 	}
 
-	@RequestMapping(value = "/updatecustomer/{customerid}/{customername}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/updatecustomer/{customerid}/{newcustomername}", method = RequestMethod.PUT)
 	public @ResponseBody
 	Customer updateCustomer(@PathVariable int customerid,
-			@PathVariable String customername) throws Exception {
+			@PathVariable String newcustomername) throws Exception {
 
-		LOG.info("updating customername to " + customername
+		LOG.info("updating customername to " + newcustomername
 				+ " with customerid:" + customerid);
 
-		customer = customerDaoService.Update(customerid, customername);
+		customer = customerDaoService.Update(customerid, newcustomername);
 
 		LOG.info("updated customername to " + customer.getCustomer_name()
 				+ " with customerid:" + customer.getCustomer_id());
@@ -111,7 +112,7 @@ public class CustomerDaoServiceController {
 
 		return customer;
 	}
-	
+
 	@RequestMapping(value = "/getcustomerid/{customername}", method = RequestMethod.GET)
 	public @ResponseBody
 	List<?> getCustomer(@PathVariable String customername) throws Exception {

@@ -14,8 +14,9 @@
 		<p>
 			<b>Uri:baseUri/getcustomer/{customerId}</b> <br></br> <b>Verb:GET</b>
 		</p>
-		<p>Using the url when I request the service with a valid customer id then I should retrieve its
-			corresponding customer name from the service</p>
+		<p>Using the url when I request the service with a valid customer
+			id then I should retrieve its corresponding customer name from the
+			service</p>
 		<table c:execute="#result=testGetCustomerWithId(#customerId)">
 			<tr>
 				<th c:set="#customerId">CustomerId</th>
@@ -52,8 +53,8 @@
 		<p>
 			<b>Verb:GET</b>
 		</p>
-		<p>When I request the service with invalid url then I should receive a
-			valid error message that the resource is not found</p>
+		<p>When I request the service with invalid url then I should
+			receive a valid error message that the resource is not found</p>
 		<table c:execute="#result=testStatusCodes(#uri)">
 			<tr>
 				<th c:set="#uri">Invalid URI</th>
@@ -70,16 +71,160 @@
 		<p>
 			<b>Uri:baseUri/getallcustomers</b> <br></br> <b>Verb:GET</b>
 		</p>
-		<p>Using the url when I request the service to get all the customers then I should be
-			able to find all the customers in the table</p>
+		<p>Using the url when I request the service to get all the
+			customers then I should be able to find all the customers in the
+			table</p>
 		<table c:verifyRows="#result:testGetAllCustomers()">
-			<tr><th c:assertEquals="#result">CustomerName</th></tr>
-			<tr><td>Sam</td></tr>
-			<tr><td>Nick</td></tr>
-			<tr><td>Mary</td></tr>
-			<tr><td>Peter</td></tr>
-			<tr><td>Jasmine</td></tr>
-			<tr><td>Joy</td></tr>
+			<tr>
+				<th c:assertEquals="#result">CustomerName</th>
+			</tr>
+			<tr>
+				<td>Sam</td>
+			</tr>
+			<tr>
+				<td>Nick</td>
+			</tr>
+			<tr>
+				<td>Mary</td>
+			</tr>
+			<tr>
+				<td>Peter</td>
+			</tr>
+			<tr>
+				<td>Jasmine</td>
+			</tr>
+			<tr>
+				<td>Joy</td>
+			</tr>
+		</table>
+	</div>
+	<div class="example">
+		<h3>3.Get CustomerId for Customer</h3>
+		<p>
+			<b>Uri:baseUri/getcustomerid/{customername}</b> <br></br> <b>Verb:GET</b>
+		</p>
+		<p>Using the url when I request the service to get customerid for
+			a given customername then I should be able to get valid corresponding
+			customer id</p>
+		<table c:execute="#result=testGetCustomerIdWithName(#customerName)">
+			<tr>
+				<th c:set="#customerName">CustomerName</th>
+				<th c:assertEquals="#result">CustomerId</th>
+			</tr>
+			<tr>
+				<td>Sam</td>
+				<td>[10, 17]</td>
+			</tr>
+			<tr>
+				<td>Nick</td>
+				<td>[11]</td>
+			</tr>
+			<tr>
+				<td>Mary</td>
+				<td>[13]</td>
+			</tr>
+			<tr>
+				<td>Peter</td>
+				<td>[14]</td>
+			</tr>
+			<tr>
+				<td>Jasmine</td>
+				<td>[15]</td>
+			</tr>
+			<tr>
+				<td>Joy</td>
+				<td>[16]</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="example">
+		<h3>4.Update customer id with new customer name</h3>
+		<p>
+			<b>Uri:baseUri/updatecustomer/{customerid}/{newcustomername}</b> <br></br>
+			<b>Verb:PUT</b>
+		</p>
+		<p>Using the url when I request the service to update customer
+			name with customerid, then I should be able to retrieve the customer
+			id with new customername</p>
+		<table
+			c:execute="#result=testUpdateCustomerForIdWithName(#customerId,#newCustomerName)">
+			<tr>
+				<th c:set="#customerId">CustomerId</th>
+				<th c:set="#newCustomerName">New CustomerName</th>
+				<th c:assertEquals="#result">Updated Customer</th>
+			</tr>
+			<tr>
+				<td>10</td>
+				<td>SamToNick</td>
+				<td>[10, SamToNick]</td>
+			</tr>
+			<tr>
+				<td>10</td>
+				<td>Sam</td>
+				<td>[10, Sam]</td>
+			</tr>
+		</table>
+	</div>
+	<div class="example">
+		<h3>5.Creating new customer</h3>
+		<p>
+			<b>Uri:baseUri/registernewcustomer/{customername}</b> <br></br> <b>Verb:POST</b>
+		</p>
+		<p>Using the url when I request the service to create new customer
+			then I should be able to create new customer</p>
+		<table c:execute="#result1=testRegisterNewCustomer(#newCustomerName)">
+			<tr>
+				<th c:set="#newCustomerName">NewCustomerName</th>
+				<th c:assertEquals="#result1">Status</th>
+			</tr>
+			<tr>
+				<td>New Zealand</td>
+				<td>200</td>
+			</tr>
+			<tr>
+				<td>Australia</td>
+				<td>200</td>
+			</tr>
+		</table>
+
+		<table
+			c:verifyRows="#newCustomerName:testGetAllCustomers()">
+			<tr>
+				<th c:assertEquals="#newCustomerName">NewCustomersList</th>
+			</tr>
+		
+		</table>
+	</div>
+	
+	<div class="example">
+		<h3>6.Delete customer with customername</h3>
+		<p>
+			<b>Uri:baseUri/deletecustomer/{customerid}</b><br></br> <b>Verb:DELETE</b>
+		</p>
+		<p>Using the url when I request the service to delete customer
+			then I should be able to delete the customer</p>
+		<table c:execute="#result1=testDeleteCustomer(#customername)">
+			<tr>
+				<th c:set="#customername">CustomerName</th>
+				<th c:assertEquals="#result1">Status</th>
+			</tr>
+			<tr>
+				<td>New Zealand</td>
+				<td>200</td>
+			</tr>
+			<tr>
+				<td>Australia</td>
+				<td>200</td>
+			</tr>
+		</table>
+
+		<table
+			c:verifyRows="#customername:testGetAllCustomers()">
+			<tr>
+				<th c:assertEquals="#customername">CustomerName</th>
+			</tr>
+		
 		</table>
 	</div>
 </body>
