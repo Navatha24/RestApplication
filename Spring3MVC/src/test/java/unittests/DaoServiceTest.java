@@ -2,23 +2,16 @@ package unittests;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.spring.dao.CustomerDaoService;
 import org.spring.model.Customer;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 public class DaoServiceTest {
 	private CustomerDaoService customerDaoService;
@@ -28,7 +21,7 @@ public class DaoServiceTest {
 
 	@Before
 	public void setUp() {
-		customerDaoService = mock(CustomerDaoService.class);
+		//customerDaoService = mock(CustomerDaoService.class);
 	}
 
 	@Test

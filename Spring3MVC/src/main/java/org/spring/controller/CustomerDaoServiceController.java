@@ -1,12 +1,9 @@
 package org.spring.controller;
 
 import org.slf4j.*;
-
 import java.util.List;
-
 import org.spring.dao.CustomerDaoService;
 import org.spring.model.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -19,8 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/assurity/customers")
 public class CustomerDaoServiceController {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(CustomerDaoServiceController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(CustomerDaoServiceController.class);
 	private ApplicationContext context;
 	private CustomerDaoService customerDaoService;
 	private Customer customer;

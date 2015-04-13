@@ -1,9 +1,5 @@
 package org.spring.model;
 
-import java.util.List;
-
-import org.codehaus.jackson.annotate.JsonProperty;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("book")

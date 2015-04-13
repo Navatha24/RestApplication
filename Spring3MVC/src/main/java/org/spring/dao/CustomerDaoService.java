@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.sql.Types;
-
 import javax.sql.DataSource;
-
 import org.spring.interfaces.CustomerInterface;
 import org.spring.mapppers.*;
 import org.spring.model.Customer;

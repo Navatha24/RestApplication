@@ -6,17 +6,19 @@
 	<h1>Specification By Example-RESTful Web Service</h1>
 	<p>
 		<b>Service
-			baseUri:http://localhost:8080/SpringMVC/rest/assurity/customers</b>
+			baseUrl:http://localhost:8080/SpringMVC/rest/assurity/customers</b>
 	</p>
 
 	<div class="example">
 		<h3>1.Get customer details</h3>
 		<p>
-			<b>Uri:baseUri/getcustomer/{customerId}</b> <br></br> <b>Verb:GET</b>
+			<b>Url:baseUrl/getcustomer/{customerId}</b> <br></br> <b>Verb:GET</b>
 		</p>
-		<p>Using the url when I request the service with a valid customer
-			id then I should retrieve its corresponding customer name from the
-			service</p>
+		<p>
+			Given a valid url with "customer id"<br></br> When I send the request
+			to the service using GET command<br></br> Then I should receive a
+			response with its corresponding "customer name"
+		</p>
 		<table c:execute="#result=testGetCustomerWithId(#customerId)">
 			<tr>
 				<th c:set="#customerId">CustomerId</th>
@@ -53,8 +55,11 @@
 		<p>
 			<b>Verb:GET</b>
 		</p>
-		<p>When I request the service with invalid url then I should
-			receive a valid error message that the resource is not found</p>
+		<p>
+			Given an invalid "url" <br></br> When I send the request to the
+			service using GET command<br></br> Then I should receive an error
+			response with relevant "status code"
+		</p>
 		<table c:execute="#result=testStatusCodes(#uri)">
 			<tr>
 				<th c:set="#uri">Invalid URI</th>
@@ -69,43 +74,54 @@
 	<div class="example">
 		<h3>3.Validate few customers</h3>
 		<p>
-			<b>Uri:baseUri/getallcustomers</b> <br></br> <b>Verb:GET</b>
+			<b>Url:baseUri/getallcustomers</b> <br></br> <b>Verb:GET</b>
 		</p>
-		<p>Using the url when I request the service to get all the
-			customers then I should be able to find all the customers in the
-			table</p>
-		<table c:verifyRows="#result:testGetAllCustomers()">
+		<p>
+			Given a valid url to get all customers<br></br> When I send the
+			request to the service using GET command<br></br> Then I should
+			receive a response with any of all these customers
+		</p>
+		<table c:execute="#result=searchForCustomerName(#name)">
 			<tr>
-				<th c:assertEquals="#result">CustomerName</th>
+				<th c:set="#name">CustomerName</th>
+				<th c:assertEquals="#result">Exists</th>
 			</tr>
 			<tr>
 				<td>Sam</td>
+				<td>true</td>
 			</tr>
 			<tr>
 				<td>Nick</td>
+				<td>true</td>
 			</tr>
 			<tr>
 				<td>Mary</td>
+				<td>true</td>
 			</tr>
 			<tr>
 				<td>Peter</td>
+				<td>true</td>
 			</tr>
 			<tr>
 				<td>Jasmine</td>
+				<td>true</td>
 			</tr>
 			<tr>
-				<td>Joy</td>
+				<td>Joys</td>
+				<td>false</td>
 			</tr>
 		</table>
 	</div>
 	<div class="example">
 		<h3>3.Get CustomerId for Customer</h3>
 		<p>
-			<b>Uri:baseUri/getcustomerid/{customername}</b> <br></br> <b>Verb:GET</b>
+			<b>Url:baseUri/getcustomerid/{customername}</b> <br></br> <b>Verb:GET</b>
 		</p>
-		<p>Using the url when I request the service to get customerid for
-			a given customername then I should be able to get valid corresponding
-			customer id</p>
+		<p>
+			Given a valid url with "customer name"<br></br> When I send the
+			request to the service using GET command<br></br> Then I should
+			receive a response with its corresponding "customer id"
+		</p>
 		<table c:execute="#result=testGetCustomerIdWithName(#customerName)">
 			<tr>
 				<th c:set="#customerName">CustomerName</th>
@@ -144,9 +160,12 @@
 			<b>Uri:baseUri/updatecustomer/{customerid}/{newcustomername}</b> <br></br>
 			<b>Verb:PUT</b>
 		</p>
-		<p>Using the url when I request the service to update customer
-			name with customerid, then I should be able to retrieve the customer
-			id with new customername</p>
+		<p>
+			Given a valid url to update the customer with "id" and "new name"<br></br>
+			When I send the request to the service using PUT command<br></br>
+			Then I should receive a response with "updated name" for "customerid"
+		</p>
+
 		<table
 			c:execute="#result=testUpdateCustomerForIdWithName(#customerId,#newCustomerName)">
 			<tr>
@@ -171,43 +190,62 @@
 		<p>
 			<b>Uri:baseUri/registernewcustomer/{customername}</b> <br></br> <b>Verb:POST</b>
 		</p>
-		<p>Using the url when I request the service to create new customer
-			then I should be able to create new customer</p>
-		<table c:execute="#result1=testRegisterNewCustomer(#newCustomerName)">
+		<p>
+			Given a valid url with new "customer name"<br></br> When I send the
+			request to the service to create a new customer using POST command<br></br>
+			Then I should receive a response with valid "status code" <br></br>
+			Then I should be able to view the "customer" in the customers table
+		</p>
+		<table c:execute="#result=testRegisterNewCustomer(#newCustomerName)">
 			<tr>
 				<th c:set="#newCustomerName">NewCustomerName</th>
-				<th c:assertEquals="#result1">Status</th>
+				<th c:assertEquals="#result">Status</th>
+				
 			</tr>
 			<tr>
 				<td>New Zealand</td>
 				<td>200</td>
+				
 			</tr>
 			<tr>
 				<td>Australia</td>
 				<td>200</td>
+			
 			</tr>
 		</table>
 
-		<table
-			c:verifyRows="#newCustomerName:testGetAllCustomers()">
+		<table c:execute="#result=searchForCustomerName(#newCustomerName)">
 			<tr>
-				<th c:assertEquals="#newCustomerName">NewCustomersList</th>
+				<th c:set="#newCustomerName">Customer</th>
+				<th c:assertEquals="#result">Exists</th>
 			</tr>
-		
+			<tr>
+				<td>New Zealand</td>
+				<td>true</td>
+				
+			</tr>
+			<tr>
+				<td>Australia</td>
+				<td>true</td>
+			</tr>
 		</table>
 	</div>
-	
 	<div class="example">
 		<h3>6.Delete customer with customername</h3>
 		<p>
 			<b>Uri:baseUri/deletecustomer/{customerid}</b><br></br> <b>Verb:DELETE</b>
 		</p>
-		<p>Using the url when I request the service to delete customer
-			then I should be able to delete the customer</p>
-		<table c:execute="#result1=testDeleteCustomer(#customername)">
+		<p>
+			Given a valid url with "customer id" to delete the customer<br></br>
+			When I send the request to the service using DELETE command<br></br>
+			Then I should receive a response with with valid "status code"<br></br>
+			Then I should not be able to see the deleted customer in the
+			customers table
+		</p>
+		<table c:execute="#result=testDeleteCustomer(#customername)">
 			<tr>
 				<th c:set="#customername">CustomerName</th>
-				<th c:assertEquals="#result1">Status</th>
+				<th c:assertEquals="#result">Status</th>
 			</tr>
 			<tr>
 				<td>New Zealand</td>
@@ -219,12 +257,19 @@
 			</tr>
 		</table>
 
-		<table
-			c:verifyRows="#customername:testGetAllCustomers()">
+		<table c:execute="#result=searchForCustomerName(#customername)">
 			<tr>
-				<th c:assertEquals="#customername">CustomerName</th>
+				<th c:set="#customername">CustomerName</th>
+				<th c:assertEquals="#result">Exists</th>
 			</tr>
-		
+			<tr>
+				<td>New Zealand</td>
+				<td>false</td>
+			</tr>
+			<tr>
+				<td>Australia</td>
+				<td>false</td>
+			</tr>
 		</table>
 	</div>
 </body>
