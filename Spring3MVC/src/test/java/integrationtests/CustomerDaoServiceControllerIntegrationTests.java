@@ -1,6 +1,7 @@
 package integrationtests;
 
 import static com.jayway.restassured.RestAssured.given;
+import com.jayway.restassured.path.xml.XmlPath;
 import java.util.ArrayList;
 import java.util.List;
 import org.concordion.integration.junit4.ConcordionRunner;
